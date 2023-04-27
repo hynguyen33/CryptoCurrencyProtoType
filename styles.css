@@ -1,0 +1,68 @@
+* {
+    background-color: #1B2430;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+.tooltip-inner {
+    max-width: 500px;
+    text-align: left;
+}
+
+h1{
+    font-size: 300px;
+}
+.img-fluid{
+    max-width: 85%;
+    max-height: 85%;
+    border-style: none;
+    background-color: transparent;
+    filter:
+            grayscale(100)
+            drop-shadow(7px 0 0 #DCD7C9)
+            drop-shadow(0 7px 0 #DCD7C9)
+            drop-shadow(-7px 0 0 #DCD7C9)
+            drop-shadow(0 -7px 0 #DCD7C9);
+
+}
+
+.img-game{
+    border-style: none;
+    width: 20%;
+
+}
+.form-control{
+    background-color: #9BA4B5;
+}
+
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+.voffset10 { margin-bottom: 150px; }
+
+#headTitle{
+    color: #FCDE9C;
+    font-size: 100px ;
+    font-weight: bold;
+}
+#graph{
+    padding-left: -100px;
+}
+#submitButton{
+    background-color: #005E75;
+    border-color: #2EB3B8;
+}
+
+
+#investAmount{
+
+}
+

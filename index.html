@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.7.0/d3.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet" />
+
+</head>
+
+<body>
+<div class = "container-fluid">
+    <div class="container">
+        <div class="row voffset4">
+            <div class="col text-center">
+                <div id="headTitle">What is going on with cryptocurrency?</div>
+            </div>
+        </div>
+        <div class="row voffset6">
+            <div class="col" >
+                <img src="imgs/bitcoin-btc-logo.png" class="img-fluid" id = 'bitcoin' data-item="btc"  data-toggle="tooltip"
+                     data-placement="bottom"
+                     title="Bitcoin is a peer-to-peer online currency, meaning that all transactions happen directly between equal,
+                     independent network participants, without the need for any intermediary to permit or facilitate them.">
+            </div>
+            <div class="col">
+                <img src="imgs/litecoin-ltc-3482909-2910825.png" class="img-fluid"  id = "litecoin" data-item="ltc"
+                     data-toggle="tooltip" data-placement="bottom" title="Litecoin (LTC) is a cryptocurrency that was designed to provide fast,
+                     secure and low-cost payments by leveraging the unique properties of blockchain technology.">
+            </div>
+            <div class="col">
+                <img src="imgs/Ethereum-ETH-icon.png" class="img-fluid" id = "ethcoin" data-item="eth" data-toggle="tooltip"
+                     data-placement="bottom" title="Ethereum is a decentralized open-source blockchain system that features its own cryptocurrency, Ether.
+                     ETH works as a platform for numerous other cryptocurrencies, as well as for the execution of decentralized smart contracts.">
+            </div>
+            <div class="col">
+                <img src="imgs/dogecoin-doge-logo.png" class="img-fluid" id = "dogecoin" data-item="doge" data-toggle="tooltip"
+                     data-placement="bottom" title="Dogecoin (DOGE) is based on the popular 'doge' Internet meme and features a Shiba Inu on its logo.
+                     The open-source digital currency was created by Billy Markus from Portland, Oregon and Jackson Palmer from Sydney, Australia, and was forked from Litecoin in December 2013">
+            </div>
+            <div class="col">
+                <img src="imgs/Shiba_Inu_coin_logo.png" class="img-fluid" id = "shibacoin" data-item="shiba" data-toggle="tooltip"
+                     data-placement="bottom" title="Once upon a time, there was a very special dog. That dog was a Shiba Inu,
+                     and this dog inspired millions of people around the world to invest money into tokens with the dog's image on it.">
+            </div>
+        </div>
+        <div class="row voffset6 ">
+            <div class="col">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="chartValue" id="chartValue1" value="price" autocomplete="off" checked>
+                        Price
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="chartValue" id="chartValue2" value="marketcap" autocomplete="off">
+                        Marketcap
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="chartValue" id="chartValue3" value="volume" autocomplete="off"> Volume
+                    </label>
+                </div>
+                <input type="checkbox" name="zoomControl" data-toggle="toggle" data-on="Zoom" data-off="Normal">
+            </div>
+        </div>
+        <svg id="graph" width="1200" height="800" visibility="visible">
+            <g id="right"></g>
+            <g id="bottom"></g>
+        </svg>
+        <div class="row voffset4">
+            <div class="col-sm-3">
+                <label for="input-group">Invest money </label>
+                <div class="input-group" id="input-group">
+                    <label for="investAmount"></label><input type="number" id="investAmount" class="form-control"
+                                                             placeholder="Amount">
+                    <span class="input-group-text">.00</span>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label for="startDate">Buying Date </label>
+                    <input id="startDate" class="form-control" type="date" />
+            </div>
+            <div class="col-sm-3">
+                <label for="endDate">Closing Date </label>
+                <input id="endDate" class="form-control" type="date" />
+            </div>
+        </div>
+        <div class="row voffset4">
+            <div class="col">
+                <input id="submitButton" type="button" class="btn btn-primary click" value="Submit" height="26" />
+            </div>
+
+        </div>
+        <div class="row voffset4 ">
+            <div class="col-sm-3">
+                <h2> Coin</h2>
+            </div>
+            <div class="col-sm-3">
+                <h2>Total Coin</h2>
+            </div>
+            <div class="col-sm-3">
+                <h2>Closing Price</h2>
+            </div>
+            <div class="col-sm-3">
+                <h2> Result</h2>
+            </div>
+        </div>
+        <div class="row voffset3">
+            <div class="col-sm-3">
+                <img src="imgs/bitcoin-btc-logo.png" class="img-game">
+            </div>
+            <div class="col-sm-3">
+                <p id='bitcoinInitialValue'>  </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='bitcoinFinalValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='bitcoinResult'> </p>
+            </div>
+        </div>
+        <div class="row voffset2">
+            <div class="col-sm-3">
+                <img src="imgs/litecoin-ltc-3482909-2910825.png" class="img-game">
+            </div>
+            <div class="col-sm-3">
+                <p id='litecoinInitialValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='litecoinFinalValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='litecoinResult'></p>
+            </div>
+        </div>
+        <div class="row voffset2">
+            <div class="col-sm-3">
+                <img src="imgs/Ethereum-ETH-icon.png" class="img-game">
+            </div>
+            <div class="col-sm-3">
+                <p id='ethcoinInitialValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='ethcoinFinalValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='ethcoinResult'> </p>
+            </div>
+        </div>
+        <div class="row voffset2">
+            <div class="col-sm-3">
+                <img src="imgs/dogecoin-doge-logo.png" class="img-game">
+            </div>
+            <div class="col-sm-3">
+                <p id='dogecoinInitialValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='dogecoinFinalValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='dogecoinResult'> </p>
+            </div>
+        </div>
+        <div class="row voffset10 voffset2">
+            <div class="col-sm-3">
+                <img src="imgs/Shiba_Inu_coin_logo.png" class="img-game">
+            </div>
+            <div class="col-sm-3    " >
+                <p id='shibacoinInitialValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='shibacoinFinalValue'> </p>
+            </div>
+            <div class="col-sm-3">
+                <p id='shibacoinResult'> </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="./cryptograph.js"></script>
+</body>
+
+</html>
