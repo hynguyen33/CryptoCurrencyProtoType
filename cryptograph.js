@@ -56,20 +56,20 @@
         var isSelected = selectedCoin(item)
 
         var filter = 'grayscale(0%) drop-shadow(7px 0 0 color) drop-shadow(0 7px 0 color) drop-shadow(-7px 0 0 color) drop-shadow(0 -7px 0 color)'
-        var selectedCoinfilter = filter.replaceAll('color',selectedColor)
+        var selectedCoinfilter = filter.replaceAll('color', selectedColor)
 
         if (isSelected) {
-            $(e.target).css('filter',selectedCoinfilter)
+            $(e.target).css('filter', selectedCoinfilter)
         }
         else {
-            $(e.target).css('filter','grayscale(100%) drop-shadow(7px 0 0 gray) drop-shadow(0 7px 0 gray) drop-shadow(-7px 0 0 gray) drop-shadow(0 -7px 0 gray)')
+            $(e.target).css('filter', 'grayscale(100%) drop-shadow(7px 0 0 gray) drop-shadow(0 7px 0 gray) drop-shadow(-7px 0 0 gray) drop-shadow(0 -7px 0 gray)')
 
         }
         clearCharts()
         drawCharts()
     })
 
-    function selectedcolor(value){
+    function selectedcolor(value) {
         if (value === BTC) {
             color = BTC_COLOR
             return color
@@ -155,31 +155,31 @@
      * @returns
      */
 
-    // calculate lose and earn in investing game.
+        // calculate lose and earn in investing game.
     var getInput = function (data, initialOutput, finalOutput, resultName) {
-        document.querySelector('.click').addEventListener('click', (e) => {
-            const moneyIn = document.getElementById('investAmount').value
-            const startDate = document.getElementById('startDate').value
-            var startItem = findPriceByDate(startDate,data)
-            var startValue = (startItem.high + startItem.low)/2
-            console.log('start price', startValue)
-            var totalCoin = (Math.round((moneyIn/startValue)*100)/100).toFixed(2)
-            console.log('totalCoin', totalCoin)
-            const endDate = document.getElementById('endDate').value
-            var endItem = findPriceByDate(endDate,data)
-            var moneyOut = (Math.round((((endItem.high + endItem.low)/2)*totalCoin)*100)/100).toFixed(2)
-            console.log('end price',moneyOut)
-            var result = Number((Math.round((moneyOut - moneyIn)*100)/100).toFixed(2))
-            console.log('result',result)
-            document.getElementById(initialOutput).innerHTML = Number(totalCoin).toLocaleString("en-US").concat(' coin')
-            document.getElementById(finalOutput).innerHTML = '$'.concat(Number(moneyOut).toLocaleString("en-US"))
-                if(result < 0){
+            document.querySelector('.click').addEventListener('click', (e) => {
+                const moneyIn = document.getElementById('investAmount').value
+                const startDate = document.getElementById('startDate').value
+                var startItem = findPriceByDate(startDate, data)
+                var startValue = (startItem.high + startItem.low) / 2
+                console.log('start price', startValue)
+                var totalCoin = (Math.round((moneyIn / startValue) * 100) / 100).toFixed(2)
+                console.log('totalCoin', totalCoin)
+                const endDate = document.getElementById('endDate').value
+                var endItem = findPriceByDate(endDate, data)
+                var moneyOut = (Math.round((((endItem.high + endItem.low) / 2) * totalCoin) * 100) / 100).toFixed(2)
+                console.log('end price', moneyOut)
+                var result = Number((Math.round((moneyOut - moneyIn) * 100) / 100).toFixed(2))
+                console.log('result', result)
+                document.getElementById(initialOutput).innerHTML = Number(totalCoin).toLocaleString("en-US").concat(' coin')
+                document.getElementById(finalOutput).innerHTML = '$'.concat(Number(moneyOut).toLocaleString("en-US"))
+                if (result < 0) {
                     document.getElementById(resultName).innerHTML = '-$'.concat(Math.abs(result).toLocaleString("en-US"))
                     document.getElementById(resultName).style.color = '#E16B75'
                 }
-                else if (result > 0){
+                else if (result > 0) {
                     document.getElementById(resultName).innerHTML = '+$'.concat(result.toLocaleString("en-US"))
-                    document.getElementById(resultName).style.color =  '#58BA43'
+                    document.getElementById(resultName).style.color = '#58BA43'
 
                 }
                 else {
@@ -211,15 +211,15 @@
     }
 
     /**
-     * Parse utc date 
+     * Parse utc date
      */
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")
 
     /**
-     * Convert data 
-     * 
-     * @param {*} data 
-     * @returns 
+     * Convert data
+     *
+     * @param {*} data
+     * @returns
      */
     var convertData = function (data) {
         data.forEach(function (d) {
@@ -244,10 +244,29 @@
      */
     var drawLineChart = function (data, color) {
         // create mapping for x axis
-        var x = d3.scaleTime()
-            .domain(d3.extent(data, function (d) { return d.timestamp }))
-            .range([0, width])
+
         // create mapping for y axis
+
+        var datas = []
+        if (btcSelected) {
+            datas.push(...btc)
+        }
+        if (ltcSelected) {
+            datas.push(...ltc)
+        }
+        if (ethSelected) {
+            datas.push(...eth)
+        }
+        if (dogeSelected) {
+            datas.push(...doge)
+        }
+        if (shibaSelected) {
+            datas.push(...shiba)
+        }
+
+        var x = d3.scaleTime()
+            .domain(d3.extent(datas, function (d) { return d.timestamp }))
+            .range([0, width])
 
         if (isZoomView) {
             if (chartValueSelected === PRICE) {
@@ -268,22 +287,6 @@
 
         }
         else {
-            var datas = []
-            if (btcSelected) {
-                datas.push(...btc)
-            }
-            if (ltcSelected) {
-                datas.push(...ltc)
-            }
-            if (ethSelected) {
-                datas.push(...eth)
-            }
-            if (dogeSelected) {
-                datas.push(...doge)
-            }
-            if (shibaSelected) {
-                datas.push(...shiba)
-            }
             if (chartValueSelected === PRICE) {
                 var y = d3.scaleLinear()
                     .domain([0, d3.max(datas, function (d) { return d.close; })])
@@ -364,6 +367,7 @@
 
         d3.select("#bottom")
             .attr("transform", "translate(50," + (height + 75) + ")")
+            .transition()
             .call(d3.axisBottom(x));
 
 
